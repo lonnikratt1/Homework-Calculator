@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Calculator</title>
+</head>
+<body>
+
+  <h1>Welcome to the Calculator!</h1>
+
+ 
+
+  <div id="inputContainer">
+    <label for="input1">Enter first number:</label>
+    <input type="text" id="input1">
+    <br>
+    <label for="input2">Enter second number:</label>
+    <input type="text" id="input2">
+  </div>
+
+  <button onclick="performOperation('addition')">Addition</button>
+  <button onclick="performOperation('subtraction')">Subtraction</button>
+  <button onclick="performOperation('multiplication')">Multiplication</button>
+  <button onclick="performOperation('division')">Division</button>
+  <button onclick="performOperation('exponent')">Exponent</button>
+  <button onclick="performOperation('root')">Root</button>
+  <button onclick="performOperation('percent')">Percent</button>
+  <button onclick="performOperation('slope')">Slope</button>
+  <button onclick="performOperation('y=mx+b')">y=mx+b</button>
+  <button onclick="performOperation('point-slope')">Point-Slope</button>
+  <button onclick="performOperation('fraction-decimal')">Fraction to Decimal</button>
+  <button onclick="performOperation('decimal-fraction')">Decimal to Fraction</button>
+
+  <h3 id="resultHeading">Result:</h3>
+
+  <script>
+    function performOperation(selectedOperation) {
+      var resultHeading = document.getElementById('resultHeading');
+      var input1 = parseFloat(document.getElementById('input1').value);
+      var input2 = parseFloat(document.getElementById('input2').value);
+
+      switch (selectedOperation) {
+        case "addition":
+          resultHeading.innerText = "Result: " + (input1 + input2);
+          break;
+
+        case "subtraction":
+          resultHeading.innerText = "Result: " + (input1 - input2);
+          break;
+
+        case "multiplication":
+          resultHeading.innerText = "Result: " + (input1 * input2);
+          break;
+
+        case "division":
+          resultHeading.innerText = "Result: " + (input1 / input2);
+          break;
+
+        case "exponent":
+          resultHeading.innerText = "Result: " + Math.pow(input1, input2);
+          break;
+
+        case "root":
+          resultHeading.innerText = "Result: " + Math.pow(input1, 1 / input2);
+          break;
+
+        case "percent":
+          resultHeading.innerText = "Result: " + (input1 * (input2 / 100));
+          break;
+
+        case "slope":
+          resultHeading.innerText = "Result: " + ((input2 - input1) / (input2 - input1));
+          break;
+
+        case "y=mx+b":
+          var x1 = parseFloat(prompt("Enter x1:"));
+          var y1 = parseFloat(prompt("Enter y1:"));
+          var x2 = parseFloat(prompt("Enter x2:"));
+          var y2 = parseFloat(prompt("Enter y2:"));
+          resultHeading.innerText = "Result: Your equation is: y = " + (y2 - y1) / (x2 - x1) + "x + " + (y1 * (x2 - x1) - x1 * (y2 - y1)) / (x2 - x1);
+          break;
+
+        case "point-slope":
+          var slope = parseFloat(prompt("Enter slope:"));
+          resultHeading.innerText = "Result: Your equation is: y - " + input2 + " = " + slope + "(x - " + input1 + ")";
+          break;
+
+        case "fraction-decimal":
+          resultHeading.innerText = "Result: " + (input1 / input2);
+          break;
+
+        case "decimal-fraction":
+          resultHeading.innerText = "Result: Your fraction is: " + decimal_to_fraction(input1);
+          break;
+
+        default:
+          resultHeading.innerText = "Invalid operation selected.";
+      }
+    }
+
+    function decimal_to_fraction(decimal) {
+      // Function to convert a decimal to a fraction
+      var tolerance = 1.0E-9;
+      var h1 = 1;
+      var h2 = 0;
+      var k1 = 0;
+      var k2 = 1;
+      var b = decimal;
+      do {
+        var a = Math.floor(b);
+        var aux = h1;
+        h1 = a * h1 + h2;
+        h2 = aux;
+        aux = k1;
+        k1 = a * k1 + k2;
+        k2 = aux;
+        b = 1 / (b - a);
+      } while (Math.abs(decimal - h1 / k1) > decimal * tolerance);
+
+      return h1 + "/" + k1;
+    }
+  </script>
+
+</body>
+</html>
